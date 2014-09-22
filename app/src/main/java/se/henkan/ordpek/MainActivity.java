@@ -6,6 +6,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
+//ToDo: Add settings
+
 public class MainActivity extends Activity {
 
     @Override

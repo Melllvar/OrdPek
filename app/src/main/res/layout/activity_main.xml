@@ -6,6 +6,10 @@
     android:orientation="vertical"
     >
 
+
+    <!--ToDo: Add settings-->
+
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/linearLayoutQuestion"
         android:layout_width="fill_parent"
@@ -14,11 +18,11 @@
 
         <TextView
             android:id="@+id/textViewQuestion"
-            android:text="@string/hello_world"
+            android:text="@string/question"
             android:layout_weight="1"
             android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:textSize="40sp"
+            android:textSize="35sp"
             android:textAllCaps="false"
             android:gravity="center"
         />
@@ -35,15 +39,16 @@
 
         <ImageButton
             android:id="@+id/Button11"
-            android:src="@drawable/ic_launcher"
+            android:src="@drawable/agnes"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:requiresFadingEdge="horizontal"
         />
 
         <ImageButton
             android:id="@+id/Button12"
-            android:src="@drawable/ic_launcher"
+            android:src="@drawable/axel"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -58,7 +63,7 @@
     >
         <ImageButton
             android:id="@+id/Button21"
-            android:src="@drawable/ic_launcher"
+            android:src="@drawable/henrik"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -66,7 +71,7 @@
 
         <ImageButton
             android:id="@+id/Button22"
-            android:src="@drawable/ic_launcher"
+            android:src="@drawable/tage"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
