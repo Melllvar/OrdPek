@@ -57,7 +57,7 @@
         android:orientation="horizontal"
     >
         <ImageButton
-            android:id="@+id/Button1"
+            android:id="@+id/Button21"
             android:src="@drawable/ic_launcher"
             android:layout_width="0dp"
             android:layout_weight="1"
