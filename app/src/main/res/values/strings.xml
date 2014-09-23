@@ -3,7 +3,7 @@
 
     <string name="app_name">OrdPek</string>
     <string name="hello_world">Hello world!</string>
-    <string name="question">Question place holder</string>
+    <string name="question">Question</string>
     <string name="action_settings">Settings</string>
 
 </resources>

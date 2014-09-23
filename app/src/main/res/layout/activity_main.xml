@@ -4,11 +4,10 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:keepScreenOn="true"
     >
 
-
     <!--ToDo: Add settings-->
-
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/linearLayoutQuestion"
@@ -28,8 +27,6 @@
         />
 
     </LinearLayout>
-
-
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/linearLayoutButtonTop"
@@ -77,8 +74,6 @@
             android:layout_height="wrap_content"
         />
     </LinearLayout>
-
-
 
 </LinearLayout>
 
