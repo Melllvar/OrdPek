@@ -2,8 +2,15 @@
 <resources>
 
     <string name="app_name">OrdPek</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="menu_header">Meny</string>
+    <string name="menu_choose_image">Välj rätt bild</string>
+    <string name="menu_choose_word">Välj rätt ord</string>
+    <string name="menu_initial_letter">Begynnelsebokstav</string>
     <string name="question">Question</string>
+    <string name="letter">L</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_choose_image">ChooseImage</string>
+    <string name="title_activity_choose_word">ChooseWord</string>
+    <string name="title_activity_initial_letter">InitialLetter</string>
 
 </resources>

@@ -1,9 +1,11 @@
 package se.henkan.ordpek;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 
@@ -18,12 +20,10 @@ public class MainActivity extends Activity {
         TextView textView = (TextView) findViewById(R.id.textViewQuestion);
 
         //String question = findViewById(R.id.Button12).getResources().getResourceName();
-
-        textView.setAllCaps(true);
+        //textView.setAllCaps(true);
 
         setContentView(R.layout.activity_main);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -43,5 +43,27 @@ public class MainActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /** Called when the user clicks the "Choose image" button*/
+    public void chooseImage(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, ChooseImageActivity.class);
+        startActivity(intent);
+    }
+
+    /** Called when the user clicks the "Choose word" button*/
+    public void chooseWord(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, ChooseWordActivity.class);
+        startActivity(intent);
+    }
+
+    /** Called when the user clicks the "Initial letter" button*/
+    public void initialLetter(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, InitialLetterActivity.class);
+        startActivity(intent);
+    }
+
 }
 
