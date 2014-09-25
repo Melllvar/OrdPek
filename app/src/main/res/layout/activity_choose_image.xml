@@ -14,14 +14,17 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textViewQuestion"
+            android:id="@+id/textViewImageQuestion"
             android:text="@string/question"
             android:layout_weight="1"
             android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:textSize="35sp"
-            android:textAllCaps="false"
+            android:textSize="40sp"
+            android:paddingTop="10dp"
+            android:paddingBottom="20dp"
             android:gravity="center"
+            android:onClick="toggleCaps"
+            android:clickable="true"
         />
 
     </LinearLayout>
@@ -31,23 +34,24 @@
         android:layout_height="fill_parent"
         android:orientation="horizontal">
 
-
         <ImageButton
             android:id="@+id/chooseImageButton11"
-            android:src="@drawable/agnes"
+            android:src="@drawable/båt"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:onClick="checkImageAnswer"
+            android:scaleType="fitCenter"
         />
 
         <ImageButton
             android:id="@+id/chooseImageButton12"
-            android:src="@drawable/axel"
+            android:src="@drawable/traktor"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:onClick="checkImageAnswer"
+            android:scaleType="fitCenter"
         />
     </LinearLayout>
 
@@ -81,7 +85,8 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
         <TextView
             android:id="@+id/textViewAnswer"
@@ -92,7 +97,7 @@
             android:textSize="50sp"
             android:textAllCaps="false"
             android:gravity="center"
-        />
+            />
 
     </LinearLayout>
 

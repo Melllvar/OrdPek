@@ -10,7 +10,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 
+
 public class ChooseImageActivity extends Activity {
+    private static boolean isQuestionCapitalized = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,16 +20,12 @@ public class ChooseImageActivity extends Activity {
         setContentView(R.layout.activity_choose_image);
 
         ImageButton btn11 = (ImageButton) findViewById(R.id.chooseImageButton11);
-        btn11.setImageResource(R.drawable.agnes);
 
 
-        TextView question = (TextView) findViewById(R.id.textViewQuestion);
+        //btn11.setImageResource(R.drawable.agnes);
 
-
+        TextView question = (TextView) findViewById(R.id.textViewImageQuestion);
         question.setText("Tage");
-
-
-
 
     }
 
@@ -63,6 +61,23 @@ public class ChooseImageActivity extends Activity {
             answerView.setBackgroundColor(Color.RED);
         }
 
+    }
+
+    // Toggle between CAPITAL/lower letters in the question...
+    public void toggleCaps(View view) {
+        TextView textView = (TextView) view;
+        String questionString = textView.getText().toString();
+
+        if (isQuestionCapitalized) {
+            questionString = questionString.substring(0,1).toUpperCase() +
+                    questionString.substring(1).toLowerCase();
+            textView.setText(questionString);
+            isQuestionCapitalized = false;
+        } else {
+            questionString = questionString.toUpperCase();
+            textView.setText(questionString);
+            isQuestionCapitalized = true;
+        }
     }
 
 
