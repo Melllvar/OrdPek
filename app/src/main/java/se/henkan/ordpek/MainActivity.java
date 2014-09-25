@@ -8,7 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 
-//ToDo: Add settings
+//ToDo: Add settings "VERSALER/Gemener"
+//ToDo: Add types of game: {"Välj rätt bild", "Välj rätt ord", "Begynnelsebokstav"}
 
 public class MainActivity extends Activity {
 
