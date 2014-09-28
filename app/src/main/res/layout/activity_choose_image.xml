@@ -36,22 +36,20 @@
 
         <ImageButton
             android:id="@+id/chooseImageButton11"
-            android:src="@drawable/båt"
+            android:src="@drawable/agnes"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:onClick="checkImageAnswer"
-            android:scaleType="fitCenter"
         />
 
         <ImageButton
             android:id="@+id/chooseImageButton12"
-            android:src="@drawable/traktor"
+            android:src="@drawable/axel"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:onClick="checkImageAnswer"
-            android:scaleType="fitCenter"
         />
     </LinearLayout>
 

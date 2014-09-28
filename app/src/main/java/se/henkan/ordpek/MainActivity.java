@@ -1,11 +1,18 @@
 package se.henkan.ordpek;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import java.io.File;
 
 
 //ToDo: Add settings "VERSALER/Gemener"
@@ -17,6 +24,10 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Save some (default) drawables to internal storage...
+
+
     }
 
     @Override
@@ -57,6 +68,29 @@ public class MainActivity extends Activity {
         // Do something in response to button
         Intent intent = new Intent(this, InitialLetterActivity.class);
         startActivity(intent);
+    }
+
+    // ToDo: Should this method reside here?
+    /*
+    http://stackoverflow.com/questions/12559974/save-images-from-drawable-to-internal-file-storage-in-android
+    http://stackoverflow.com/questions/649154/save-bitmap-to-location
+    http://stackoverflow.com/questions/3035692/how-to-convert-a-drawable-to-a-bitmap
+    http://stackoverflow.com/questions/10174399/how-can-i-write-a-drawable-resource-to-a-file
+     */
+
+
+    public static Bitmap drawableToBitmap (Drawable drawable) {
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable)drawable).getBitmap();
+        }
+
+        // Is this ok or very resource heavy?
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
+        return bitmap;
     }
 
 }
