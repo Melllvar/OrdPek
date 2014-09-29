@@ -16,6 +16,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/mainMenu"
             android:text="@string/menu_header"
             android:layout_weight="1"
             android:layout_width="0px"

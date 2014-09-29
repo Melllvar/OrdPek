@@ -1,7 +1,12 @@
 package se.henkan.ordpek;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,6 +14,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.io.File;
 
 
 public class ChooseImageActivity extends Activity {
@@ -19,13 +25,38 @@ public class ChooseImageActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_image);
 
-        ImageButton btn11 = (ImageButton) findViewById(R.id.chooseImageButton11);
+
+        // Set up the images...
+        ImageButton btn21 = (ImageButton) findViewById(R.id.chooseImageButton21);
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 
 
-        //btn11.setImageResource(R.drawable.agnes);
+        File[] files = this.getFilesDir().listFiles();
+        for (File f : files) {
+            //Uri uri = Uri.parse(f.toString());
+            //btn22.setImageURI(uri);
 
-        TextView question = (TextView) findViewById(R.id.textViewImageQuestion);
-        question.setText("Tage");
+
+            Bitmap bitmap = BitmapFactory.decodeFile(f.toString(), options);
+
+            //Bitmap bm = Bitmap.createBitmap(bitmap);
+            btn21.setImageBitmap(scaleBitmap(bitmap, 350, 350));
+
+
+
+
+
+
+            // Set the question
+            TextView question = (TextView) findViewById(R.id.textViewImageQuestion);
+            question.setText(f.getName().substring(0, f.getName().length()-4));
+        }
+
+
+
+
 
     }
 
@@ -78,6 +109,39 @@ public class ChooseImageActivity extends Activity {
             textView.setText(questionString);
             isQuestionCapitalized = true;
         }
+    }
+
+
+
+
+
+    //TODO: Move to helper class??!!
+    /**
+     * Scales the provided bitmap to have the height and width provided.
+     * (Alternative method for scaling bitmaps
+     * since Bitmap.createScaledBitmap(...) produces bad (blocky) quality bitmaps.)
+     *
+     * @param bitmap is the bitmap to scale.
+     * @param newWidth is the desired width of the scaled bitmap.
+     * @param newHeight is the desired height of the scaled bitmap.
+     * @return the scaled bitmap.
+     */
+    public static Bitmap scaleBitmap(Bitmap bitmap, int newWidth, int newHeight) {
+        Bitmap scaledBitmap = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
+
+        float scaleX = newWidth / (float) bitmap.getWidth();
+        float scaleY = newHeight / (float) bitmap.getHeight();
+        float pivotX = 0;
+        float pivotY = 0;
+
+        Matrix scaleMatrix = new Matrix();
+        scaleMatrix.setScale(scaleX, scaleY, pivotX, pivotY);
+
+        Canvas canvas = new Canvas(scaledBitmap);
+        canvas.setMatrix(scaleMatrix);
+        canvas.drawBitmap(bitmap, 0, 0, new Paint(Paint.FILTER_BITMAP_FLAG));
+
+        return scaledBitmap;
     }
 
 

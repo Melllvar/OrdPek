@@ -4,15 +4,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import java.io.File;
+import java.io.FileOutputStream;
 
 
 //ToDo: Add settings "VERSALER/Gemener"
@@ -25,9 +28,38 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         // Save some (default) drawables to internal storage...
+        if (this.getFilesDir().listFiles().length == 0) {
+
+            Log.d("INFO:::", "Inuti IF..... Skapar \"ankan.png\"");
+
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.agnes2);
+            FileOutputStream outputStream;
+
+            try {
+                outputStream = openFileOutput("ankan.png", Context.MODE_PRIVATE);
+                bm.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                outputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
 
+
+
+
+
+
+        // List files in internal storage
+        // REMOVE ME!
+        Log.d("INFO:::", this.getFilesDir().toString());
+        File[] files = this.getFilesDir().listFiles();
+        for (File f : files) {
+            Log.d("INFO:::", f.toString());
+        }
     }
 
     @Override
@@ -70,15 +102,26 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
-    // ToDo: Should this method reside here?
-    /*
-    http://stackoverflow.com/questions/12559974/save-images-from-drawable-to-internal-file-storage-in-android
-    http://stackoverflow.com/questions/649154/save-bitmap-to-location
-    http://stackoverflow.com/questions/3035692/how-to-convert-a-drawable-to-a-bitmap
-    http://stackoverflow.com/questions/10174399/how-can-i-write-a-drawable-resource-to-a-file
+
+
+
+
+
+
+
+
+    /**
+     * Converts drawable to Bitmap
+     *
+     *
+     * ToDo: Should this method reside here?
+     * http://stackoverflow.com/questions/12559974/save-images-from-drawable-to-internal-file-storage-in-android
+     * http://stackoverflow.com/questions/649154/save-bitmap-to-location
+     * http://stackoverflow.com/questions/3035692/how-to-convert-a-drawable-to-a-bitmap
+     * http://stackoverflow.com/questions/10174399/how-can-i-write-a-drawable-resource-to-a-file
+     *
+     *
      */
-
-
     public static Bitmap drawableToBitmap (Drawable drawable) {
         if (drawable instanceof BitmapDrawable) {
             return ((BitmapDrawable)drawable).getBitmap();
