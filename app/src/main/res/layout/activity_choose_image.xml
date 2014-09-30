@@ -36,7 +36,7 @@
 
         <ImageButton
             android:id="@+id/chooseImageButton11"
-            android:src="@drawable/agnes"
+            android:src="@drawable/op_agnes"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
 
         <ImageButton
             android:id="@+id/chooseImageButton12"
-            android:src="@drawable/axel"
+            android:src="@drawable/op_axel"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
 
         <ImageButton
             android:id="@+id/chooseImageButton21"
-            android:src="@drawable/henrik"
+            android:src="@drawable/op_agnes"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
 
         <ImageButton
             android:id="@+id/chooseImageButton22"
-            android:src="@drawable/tage"
+            android:src="@drawable/op_tage"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"

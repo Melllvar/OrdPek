@@ -31,9 +31,13 @@ public class MainActivity extends Activity {
 
 
         // Save some (default) drawables to internal storage...
-        if (this.getFilesDir().listFiles().length == 0) {
+        if (this.getFilesDir().listFiles().length < 4) {
 
-            Log.d("INFO:::", "Inuti IF..... Skapar \"ankan.png\"");
+            Log.d("INFO:::", "Copy images from drawables...");
+            
+
+
+
 
             Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.agnes2);
             FileOutputStream outputStream;
