@@ -12,5 +12,7 @@
     <string name="title_activity_choose_image">ChooseImage</string>
     <string name="title_activity_choose_word">ChooseWord</string>
     <string name="title_activity_initial_letter">InitialLetter</string>
+    <string name="progress_title">Laddar</string>
+    <string name="progress_text">Vänta... Kopierar bilder!</string>
 
 </resources>
