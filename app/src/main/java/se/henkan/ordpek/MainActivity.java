@@ -121,30 +121,6 @@ public class MainActivity extends Activity {
 
     // Copy some default images from drawables to internal storage...
     // ToDo: Move drawables to assets?
-    private void copyDefaultImages(){
-        Log.d("INFO:::", "Copy default images from drawables...");
-
-        // Ugly but how to list all files in drawable?
-        int[] img_ids = {R.drawable.op_agnes, R.drawable.op_alvar, R.drawable.op_axel,
-                R.drawable.op_boat, R.drawable.op_henrik, R.drawable.op_hund, R.drawable.op_katt,
-                R.drawable.op_tage, R.drawable.op_traktor};
-
-        for (int id : img_ids) {
-            Bitmap bm = BitmapFactory.decodeResource(getResources(), id);
-            FileOutputStream outputStream;
-
-            try {
-                outputStream = openFileOutput(getResources().getResourceEntryName(id) + ".png",
-                        Context.MODE_PRIVATE);
-                bm.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-                outputStream.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
     private void copyAddToDBDefaultImages(){
         Log.d("INFO:::", "Copy default images from drawables...");
 

@@ -10,9 +10,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -45,6 +43,8 @@ public class ChooseImageActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+
+
     }
 
     // Check the answer...
@@ -93,42 +93,6 @@ public class ChooseImageActivity extends Activity {
             textView.setText(questionString);
             isQuestionCapitalized = true;
         }
-    }
-
-    @Deprecated
-    private void setUpImages(){
-        // Set up the images...
-        ImageButton[] buttons = { (ImageButton) findViewById(R.id.chooseImageButton11),
-                (ImageButton) findViewById(R.id.chooseImageButton12),
-                (ImageButton) findViewById(R.id.chooseImageButton21),
-                (ImageButton) findViewById(R.id.chooseImageButton22)};
-
-        // List of all the images...(Use DB?)
-        ArrayList<File> files = new ArrayList<File>(Arrays.asList(this.getFilesDir().listFiles()));
-        Random random = new Random();
-        List<String> fileNames = new ArrayList<String>();
-
-        // Set up the images...
-        for (ImageButton button : buttons) {
-            int randInt = random.nextInt(files.size());
-
-            // ToDo: Remove hardcoded sizes
-            Bitmap unscaledBitmap = ScalingUtilities.decodeFile(files.get(randInt).toString(), 350, 350, ScalingLogic.CROP);
-            Bitmap scaledBitmap = ScalingUtilities.createScaledBitmap(unscaledBitmap, 350, 350, ScalingLogic.CROP);
-            unscaledBitmap.recycle();
-            button.setImageBitmap(scaledBitmap);
-
-            fileNames.add(files.get(randInt).getName().substring(3, files.get(randInt).getName().length() - 4));
-            files.remove(randInt);
-        }
-
-        // Choose a random image to be "correct"
-        int randInt = random.nextInt(4);
-        correctAnswer = buttons[randInt];
-        String question = fileNames.get(randInt);
-
-        // Set the question text
-        setQuestionText(question);
     }
 
     // Set up from database
