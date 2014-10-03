@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import se.henkan.util.DatabaseHandler;
 import se.henkan.util.ScalingUtilities;
 import se.henkan.util.ScalingUtilities.ScalingLogic;
 
@@ -23,6 +24,7 @@ import se.henkan.util.ScalingUtilities.ScalingLogic;
 public class ChooseImageActivity extends Activity {
     private static boolean isQuestionCapitalized = false;
     private ImageButton correctAnswer;
+    private DatabaseHandler db = new DatabaseHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,7 @@ public class ChooseImageActivity extends Activity {
         setContentView(R.layout.activity_choose_image);
 
         // Set up the images...
-        setUpImages();
+        setUpImagesFromDB();
     }
 
     @Override
@@ -49,6 +51,7 @@ public class ChooseImageActivity extends Activity {
     public void checkImageAnswer(View view) {
         final TextView answerView = (TextView) findViewById(R.id.textViewAnswer);
 
+        // Set the buttons to not be clickable to avoid interruptions
         findViewById(R.id.chooseImageButton11).setClickable(false);
         findViewById(R.id.chooseImageButton12).setClickable(false);
         findViewById(R.id.chooseImageButton21).setClickable(false);
@@ -66,7 +69,7 @@ public class ChooseImageActivity extends Activity {
         handler.postDelayed(new Runnable() {
             public void run() {
                 answerView.setBackgroundColor(Color.TRANSPARENT);
-                setUpImages();
+                setUpImagesFromDB();
                 findViewById(R.id.chooseImageButton11).setClickable(true);
                 findViewById(R.id.chooseImageButton12).setClickable(true);
                 findViewById(R.id.chooseImageButton21).setClickable(true);
@@ -92,7 +95,7 @@ public class ChooseImageActivity extends Activity {
         }
     }
 
-
+    @Deprecated
     private void setUpImages(){
         // Set up the images...
         ImageButton[] buttons = { (ImageButton) findViewById(R.id.chooseImageButton11),
@@ -128,15 +131,54 @@ public class ChooseImageActivity extends Activity {
         setQuestionText(question);
     }
 
+    // Set up from database
+    private void setUpImagesFromDB(){
+        // Get the buttons in an array...
+        ImageButton[] buttons = { (ImageButton) findViewById(R.id.chooseImageButton11),
+                (ImageButton) findViewById(R.id.chooseImageButton12),
+                (ImageButton) findViewById(R.id.chooseImageButton21),
+                (ImageButton) findViewById(R.id.chooseImageButton22)};
+
+        // List of all the images... (better to just get a random number and use as KEY?
+        // Does this take long if database is large?
+        ArrayList<ImageEntry> images = (ArrayList<ImageEntry>) db.getAllImageEntries();
+
+        Random random = new Random();
+        List<String> fileNames = new ArrayList<String>();
+
+        // Set up the images...
+        for (ImageButton button : buttons) {
+            int randInt = random.nextInt(images.size());
+
+            // ToDo: Remove hardcoded sizes
+            Bitmap unscaledBitmap = ScalingUtilities.decodeFile(images.get(randInt).get_filePath(),
+                    350, 350, ScalingLogic.CROP);
+            Bitmap scaledBitmap = ScalingUtilities.createScaledBitmap(unscaledBitmap, 350, 350,
+                    ScalingLogic.CROP);
+            unscaledBitmap.recycle();
+            button.setImageBitmap(scaledBitmap);
+
+            fileNames.add(images.get(randInt).get_name());
+            images.remove(randInt);
+        }
+
+        // Choose a random image to be "correct"
+        int randInt = random.nextInt(4);
+        correctAnswer = buttons[randInt];
+        String question = fileNames.get(randInt);
+
+        // Set the question text
+        setQuestionText(question);
+    }
+
+    // Set the question string
     private void setQuestionText(String question){
         TextView questionView = (TextView) findViewById(R.id.textViewImageQuestion);
         question = question.toUpperCase();
 
         if (!isQuestionCapitalized){
-            question = question.substring(0,1) + question.substring(1).toLowerCase();
+            question = question.substring(0, 1) + question.substring(1).toLowerCase();
         }
         questionView.setText(question);
     }
-
-
 }

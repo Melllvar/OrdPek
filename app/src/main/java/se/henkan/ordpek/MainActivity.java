@@ -16,10 +16,14 @@ import android.view.View;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.List;
+
+import se.henkan.util.DatabaseHandler;
 
 
 //ToDo: Add settings "VERSALER/Gemener"
 //ToDo: Add types of game: {"Välj rätt bild", "Välj rätt ord", "Begynnelsebokstav"}
+//ToDo: Add private handlers to the different resources and layouts...
 
 public class MainActivity extends Activity {
 
@@ -30,9 +34,10 @@ public class MainActivity extends Activity {
 
 
         // Save some (default) drawables to internal storage...
-        // ToDo: Don't use hardcoded strings...
         if (this.getFilesDir().listFiles().length < 9) {
-            final ProgressDialog pd = ProgressDialog.show(MainActivity.this, "Laddar", "Vänta... Kopierar bilder!");
+            final ProgressDialog pd = ProgressDialog.show(MainActivity.this,
+                    getResources().getString(R.string.progress_title),
+                    getResources().getString(R.string.progress_text));
             final Handler handler = new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
@@ -46,10 +51,20 @@ public class MainActivity extends Activity {
                 public void run() {
                     //heavy job here
                     //send message to main thread
-                    copyDefaultImages();
+                    copyAddToDBDefaultImages();
                     handler.sendEmptyMessage(0);
                 }
             }).start();
+        }
+
+        Log.d("INFO::: ", "Reading all images..");
+        DatabaseHandler db = new DatabaseHandler(this);
+        List<ImageEntry> images = db.getAllImageEntries();
+        for (ImageEntry image : images) {
+            String log = "Id: "+image.get_id()+" ,Filepath: " + image.get_filePath() +
+                    " ,Name: " + image.get_name() + " ,First letter: " + image.get_firstLetter();
+            // Writing Contacts to log
+            Log.d("INFO::: ", log);
         }
 
 
@@ -129,6 +144,42 @@ public class MainActivity extends Activity {
         }
     }
 
+
+    private void copyAddToDBDefaultImages(){
+        Log.d("INFO:::", "Copy default images from drawables...");
+
+        // Ugly but how to list all files in drawable?
+        int[] img_ids = {R.drawable.op_agnes, R.drawable.op_alvar, R.drawable.op_axel,
+                R.drawable.op_boat, R.drawable.op_henrik, R.drawable.op_hund, R.drawable.op_katt,
+                R.drawable.op_tage, R.drawable.op_traktor};
+
+        for (int id : img_ids) {
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), id);
+            FileOutputStream outputStream;
+
+            try {
+                outputStream = openFileOutput(getResources().getResourceEntryName(id) + ".png",
+                        Context.MODE_PRIVATE);
+                bm.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                outputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        Log.d("INFO:::", "Adding to database...");
+        DatabaseHandler db = new DatabaseHandler(this);
+        String dirPath = this.getFilesDir().getPath();
+        db.addImageEntry(new ImageEntry(dirPath + "/op_agnes.png", "Agnes"));
+        db.addImageEntry(new ImageEntry(dirPath + "/op_alvar.png", "Alvar"));
+        db.addImageEntry(new ImageEntry(dirPath + "/op_axel.png", "Axel"));
+        db.addImageEntry(new ImageEntry(dirPath + "/op_boat.png", "Båt"));
+        db.addImageEntry(new ImageEntry(dirPath + "/op_henrik.png", "Henrik"));
+        db.addImageEntry(new ImageEntry(dirPath + "/op_hund.png", "Hund"));
+        db.addImageEntry(new ImageEntry(dirPath + "/op_katt.png", "Katt"));
+        db.addImageEntry(new ImageEntry(dirPath + "/op_tage.png", "Tage"));
+        db.addImageEntry(new ImageEntry(dirPath + "/op_traktor.png", "Traktor"));
+    }
 
 }
 
