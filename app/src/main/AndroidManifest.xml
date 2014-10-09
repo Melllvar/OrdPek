@@ -20,7 +20,6 @@
         <activity
             android:name=".ChooseImageActivity"
             android:label="@string/title_activity_choose_image"
-            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -37,6 +36,14 @@
         <activity
             android:name=".InitialLetterActivity"
             android:label="@string/title_activity_initial_letter"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="se.henkan.ordpek.MainActivity" />
+        </activity>
+        <activity
+            android:name=".AddImageActivity"
+            android:label="@string/title_activity_add_image"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -30,26 +29,12 @@ public class ChooseImageActivity extends Activity {
         setContentView(R.layout.activity_choose_image);
 
         // Set up the images...
-        setUpImagesFromDB();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-
-
+        randomizeImages();
     }
 
     // Check the answer...
     public void checkImageAnswer(View view) {
-        final TextView answerView = (TextView) findViewById(R.id.textViewAnswer);
+        final TextView answerView = (TextView) findViewById(R.id.textViewAnswerImages);
 
         // Set the buttons to not be clickable to avoid interruptions
         findViewById(R.id.chooseImageButton11).setClickable(false);
@@ -69,17 +54,17 @@ public class ChooseImageActivity extends Activity {
         handler.postDelayed(new Runnable() {
             public void run() {
                 answerView.setBackgroundColor(Color.TRANSPARENT);
-                setUpImagesFromDB();
+                randomizeImages();
                 findViewById(R.id.chooseImageButton11).setClickable(true);
                 findViewById(R.id.chooseImageButton12).setClickable(true);
                 findViewById(R.id.chooseImageButton21).setClickable(true);
                 findViewById(R.id.chooseImageButton22).setClickable(true);
             }
-        }, 1500);
+        }, 1000);
     }
 
     // Toggle between CAPITAL/lower letters in the question when pressed...
-    public void toggleCaps(View view) {
+    public void toggleCapsImage(View view) {
         TextView textView = (TextView) view;
         String questionString = textView.getText().toString();
 
@@ -95,8 +80,8 @@ public class ChooseImageActivity extends Activity {
         }
     }
 
-    // Set up from database
-    private void setUpImagesFromDB(){
+    // Set random images in place...
+    private void randomizeImages(){
         // Get the buttons in an array...
         ImageButton[] buttons = { (ImageButton) findViewById(R.id.chooseImageButton11),
                 (ImageButton) findViewById(R.id.chooseImageButton12),

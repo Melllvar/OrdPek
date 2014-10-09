@@ -14,16 +14,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import java.io.File;
 import java.io.FileOutputStream;
-import java.util.List;
 
 import se.henkan.util.DatabaseHandler;
 
 
-//ToDo: Add settings "VERSALER/Gemener"
-//ToDo: Add types of game: {"Välj rätt bild", "Välj rätt ord", "Begynnelsebokstav"}
-//ToDo: Add private handlers to the different resources and layouts...
+//ToDo: Add settings "Hantera bilder..."
+//ToDo: Add private variables to the different resources and layouts...
 
 public class MainActivity extends Activity {
 
@@ -32,7 +29,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        //ToDO: Do this better? ==[ HARDCODED ]==
         // Save some (default) drawables to internal storage...
         if (this.getFilesDir().listFiles().length < 9) {
             final ProgressDialog pd = ProgressDialog.show(MainActivity.this,
@@ -49,33 +46,13 @@ public class MainActivity extends Activity {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    //heavy job here
-                    //send message to main thread
-                    copyAddToDBDefaultImages();
-                    handler.sendEmptyMessage(0);
+                //heavy job here
+                //send message to main thread
+                copyAddToDBDefaultImages();
+                handler.sendEmptyMessage(0);
+
                 }
             }).start();
-        }
-
-        Log.d("INFO::: ", "Reading all images..");
-        DatabaseHandler db = new DatabaseHandler(this);
-        List<ImageEntry> images = db.getAllImageEntries();
-        for (ImageEntry image : images) {
-            String log = "Id: "+image.get_id()+" ,Filepath: " + image.get_filePath() +
-                    " ,Name: " + image.get_name() + " ,First letter: " + image.get_firstLetter();
-            // Writing Contacts to log
-            Log.d("INFO::: ", log);
-        }
-
-
-        // Add to database instead?
-
-        // List files in internal storage
-        // REMOVE ME!
-        Log.d("INFO:::", this.getFilesDir().toString());
-        File[] files = this.getFilesDir().listFiles();
-        for (File f : files) {
-            Log.d("INFO:::", f.toString());
         }
     }
 
@@ -91,11 +68,16 @@ public class MainActivity extends Activity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                //openSettings();
+                return true;
+            case R.id.action_add:
+                openAdd();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     /** Called when the user clicks the "Choose image" button*/
@@ -133,6 +115,7 @@ public class MainActivity extends Activity {
             Bitmap bm = BitmapFactory.decodeResource(getResources(), id);
             FileOutputStream outputStream;
 
+            // ToDo: Don't just catch an generic Exception...
             try {
                 outputStream = openFileOutput(getResources().getResourceEntryName(id) + ".png",
                         Context.MODE_PRIVATE);
@@ -146,6 +129,8 @@ public class MainActivity extends Activity {
         Log.d("INFO:::", "Adding to database...");
         DatabaseHandler db = new DatabaseHandler(this);
         String dirPath = this.getFilesDir().getPath();
+
+        // Hardcoded...
         db.addImageEntry(new ImageEntry(dirPath + "/op_agnes.png", "Agnes"));
         db.addImageEntry(new ImageEntry(dirPath + "/op_alvar.png", "Alvar"));
         db.addImageEntry(new ImageEntry(dirPath + "/op_axel.png", "Axel"));
@@ -156,6 +141,13 @@ public class MainActivity extends Activity {
         db.addImageEntry(new ImageEntry(dirPath + "/op_tage.png", "Tage"));
         db.addImageEntry(new ImageEntry(dirPath + "/op_traktor.png", "Traktor"));
     }
+
+    private void openAdd() {
+        Intent intent = new Intent(this, AddImageActivity.class);
+        startActivity(intent);
+    }
+
+
 
 }
 

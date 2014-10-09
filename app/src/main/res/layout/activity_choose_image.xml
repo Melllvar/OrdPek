@@ -5,7 +5,6 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:keepScreenOn="true"
     tools:context="se.henkan.ordpek.ChooseImageActivity">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,7 +14,6 @@
 
         <TextView
             android:id="@+id/textViewImageQuestion"
-            android:text="@string/question"
             android:layout_weight="1"
             android:layout_width="0px"
             android:layout_height="wrap_content"
@@ -23,7 +21,7 @@
             android:paddingTop="10dp"
             android:paddingBottom="20dp"
             android:gravity="center"
-            android:onClick="toggleCaps"
+            android:onClick="toggleCapsImage"
             android:clickable="true"
         />
 
@@ -81,7 +79,7 @@
         >
 
         <TextView
-            android:id="@+id/textViewAnswer"
+            android:id="@+id/textViewAnswerImages"
             android:text=" "
             android:layout_weight="1"
             android:layout_width="0px"

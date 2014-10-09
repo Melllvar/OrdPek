@@ -144,4 +144,20 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         db.close();
     }
 
+    // Return a List of all the ID's
+    public List<Integer> getAllIDs(){
+        List<Integer> IDs = new ArrayList<Integer>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_IMAGES;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                IDs.add(Integer.parseInt(cursor.getString(0)));
+            } while (cursor.moveToNext());
+        }
+        return IDs;
+    }
+
 }

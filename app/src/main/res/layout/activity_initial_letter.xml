@@ -5,9 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:keepScreenOn="true"
     tools:context="se.henkan.ordpek.InitialLetterActivity">
-
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
@@ -16,13 +14,15 @@
 
         <TextView
             android:id="@+id/TextViewLetterQuestion"
-            android:text="@string/letter"
             android:layout_weight="1"
             android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:textSize="35sp"
-            android:textAllCaps="false"
+            android:textSize="40sp"
+            android:paddingTop="10dp"
+            android:paddingBottom="20dp"
             android:gravity="center"
+            android:onClick="toggleCapsLetter"
+            android:clickable="true"
             />
 
     </LinearLayout>
@@ -32,21 +32,20 @@
         android:layout_height="fill_parent"
         android:orientation="horizontal">
 
-
         <ImageButton
             android:id="@+id/initialLetterButton11"
-            android:src="@drawable/op_agnes"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:onClick="checkLetterAnswer"
             />
 
         <ImageButton
             android:id="@+id/initialLetterButton12"
-            android:src="@drawable/op_axel"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:onClick="checkLetterAnswer"
             />
     </LinearLayout>
 
@@ -57,19 +56,38 @@
         >
         <ImageButton
             android:id="@+id/initialLetterButton21"
-            android:src="@drawable/op_henrik"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:onClick="checkLetterAnswer"
             />
 
         <ImageButton
             android:id="@+id/initialLetterButton22"
-            android:src="@drawable/op_tage"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:onClick="checkLetterAnswer"
             />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:id="@+id/textViewAnswerLetter"
+            android:text=" "
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:textSize="50sp"
+            android:textAllCaps="false"
+            android:gravity="center"
+            />
+
     </LinearLayout>
 
 </LinearLayout>
