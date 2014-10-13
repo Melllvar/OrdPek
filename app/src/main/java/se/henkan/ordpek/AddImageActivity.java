@@ -6,10 +6,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,7 +26,7 @@ public class AddImageActivity extends Activity {
     private static final int SELECT_AND_CROP_IMAGE = 888;
 
     // Temporary image file
-    private static final String TEMP_IMAGE_FILE = "temporary_holder.jpg";
+    private static final String TEMP_IMAGE_FILE = "op_temp.jpg";
 
     // Reference to the image view
     private ImageView mImageView;
@@ -44,24 +44,34 @@ public class AddImageActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == SELECT_IMAGE  && resultCode == Activity.RESULT_OK) {
-
+        // ToDo: Delete this...?
+        if (requestCode == SELECT_IMAGE  && resultCode == RESULT_OK) {
             Bitmap bitmap = getBitmapFromCameraData(data);
-
             if (bitmap == null) {
                 mImageView.setImageResource(R.drawable.op_hund);
-
             } else {
                 Bitmap scaledBitmap = ScalingUtilities.createScaledBitmap(bitmap, 350, 350,
                         ScalingUtilities.ScalingLogic.CROP);
                 mImageView.setImageBitmap(scaledBitmap);
             }
 
-        } else if (requestCode == SELECT_AND_CROP_IMAGE  && resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == SELECT_AND_CROP_IMAGE  && resultCode == RESULT_OK) {
+            Log.d("INFO:::", "URI to cropped file: " + data.getData());
             Log.d("INFO:::", "Cropping image... in dir: " + this.getFilesDir().getPath());
 
-            Bitmap selectedImage = ScalingUtilities.decodeFile(this.getFilesDir().getPath() +
-                    "/" + TEMP_IMAGE_FILE, 350, 350, ScalingUtilities.ScalingLogic.CROP);
+            File path = new File(getFilesDir().getPath());
+            File files[] = path.listFiles();
+            for (File f : files) {
+                Log.d("INFO:::", "File:   " + f.toString());
+            }
+
+
+
+            Bitmap selectedImage =  BitmapFactory.decodeFile(getFilesDir().getPath() +
+                    "/" + TEMP_IMAGE_FILE);
+
+            //Bitmap unscaledImage = ScalingUtilities.decodeFile(this.getFilesDir().getPath() +
+            //        "/" + TEMP_IMAGE_FILE, 350, 350, ScalingUtilities.ScalingLogic.CROP);
 
             Bitmap scaledBitmap = ScalingUtilities.createScaledBitmap(selectedImage, 350, 350,
                     ScalingUtilities.ScalingLogic.CROP);
@@ -75,14 +85,23 @@ public class AddImageActivity extends Activity {
         startActivityForResult(i, SELECT_IMAGE);
     }
 
-
     public void addAndCropFromGallery(View view) {
-        File tempFile = new File(this.getFilesDir().getPath(), TEMP_IMAGE_FILE);
+
+        Intent intent = new Intent("com.android.camera.action.CROP");
+
+
+        File tempFile = new File(getFilesDir(), TEMP_IMAGE_FILE);
+        Log.d("INFO:::", "Trying to create file:  " + tempFile.toString());
         Uri tempUri = Uri.fromFile(tempFile);
-        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Log.d("INFO:::", "With URI             :  " + tempUri.toString());
+        Intent i = new Intent(Intent.ACTION_PICK);
         i.setType("image/*");
+        //i.setData(tempUri);
         i.putExtra("crop", "true");
-        i.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
+        i.putExtra("aspectX", 1);
+        i.putExtra("aspectY", 1);
+        //i.putExtra("scale", "true");
+        i.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, tempUri);
         i.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         startActivityForResult(i, SELECT_AND_CROP_IMAGE);
     }
@@ -130,8 +149,7 @@ public class AddImageActivity extends Activity {
         int width_tmp = o.outWidth, height_tmp = o.outHeight;
         int scale = 1;
         while (true) {
-            if (width_tmp / 2 < REQUIRED_SIZE
-                    || height_tmp / 2 < REQUIRED_SIZE) {
+            if (width_tmp / 2 < REQUIRED_SIZE || height_tmp / 2 < REQUIRED_SIZE) {
                 break;
             }
             width_tmp /= 2;
@@ -145,5 +163,18 @@ public class AddImageActivity extends Activity {
         return BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImage), null, o2);
 
     }
+
+    //ToDo: Delete Me!!!
+    public void listAllImages(View view) {
+        TextView textView = (TextView) findViewById(R.id.add_text_view);
+        textView.setText("");
+
+        File path = new File(this.getFilesDir().getPath());
+        File files[] = path.listFiles();
+        for (File f : files) {
+            textView.append(f.toString() + "\n");
+        }
+    }
+
 
 }

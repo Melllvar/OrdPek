@@ -22,13 +22,19 @@
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:text="Add from gallery"
-            android:onClick="addAndCropFromGallery"/>
+            android:onClick="addFromGallery"/>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:text="Add from camera"
             android:onClick="addFromCamera"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:text="List all images"
+            android:onClick="listAllImages"/>
 
         <TextView
             android:id="@+id/add_text_view"
