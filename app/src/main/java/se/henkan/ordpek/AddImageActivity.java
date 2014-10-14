@@ -1,19 +1,27 @@
 package se.henkan.ordpek;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
+import se.henkan.util.DatabaseHandler;
 import se.henkan.util.ScalingUtilities;
 
 
@@ -45,15 +53,64 @@ public class AddImageActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
 
         // ToDo: Delete this...?
+        // ToDo: HARDCODED SIZE (350, 350)
         if (requestCode == SELECT_IMAGE  && resultCode == RESULT_OK) {
-            Bitmap bitmap = getBitmapFromCameraData(data);
-            if (bitmap == null) {
-                mImageView.setImageResource(R.drawable.op_hund);
-            } else {
-                Bitmap scaledBitmap = ScalingUtilities.createScaledBitmap(bitmap, 350, 350,
-                        ScalingUtilities.ScalingLogic.CROP);
-                mImageView.setImageBitmap(scaledBitmap);
-            }
+            // ToDo: check if unscaledBitmap is null?
+            final Bitmap unscaledBitmap = getBitmapFromCameraData(data);
+            final Bitmap scaledBitmap = ScalingUtilities.createScaledBitmap(unscaledBitmap, 350, 350,
+                    ScalingUtilities.ScalingLogic.CROP);
+            mImageView.setImageBitmap(scaledBitmap);
+
+            // Alert dialog to set the name...
+            // ToDo: Hardcoded strings...
+            final EditText input = new EditText(this);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Set the name of the image").setTitle("Set name");
+            builder.setView(input);
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User clicked OK button
+                    // Save image and update database...
+                    Editable value = input.getText();
+                    // ToDo: Check input for correct formatting! (åäö and correct filename...)
+                    String dbName = value.toString().trim().toLowerCase();
+                    String timeStamp = String.valueOf(System.currentTimeMillis());
+                    timeStamp = timeStamp.substring(timeStamp.length()-5);
+                    String fileName = "op_" + dbName + "_" + timeStamp + ".jpg";
+                    dbName = dbName.substring(0,1).toUpperCase() + dbName.substring(1);
+
+                    // ToDo: Move to own method/class...???
+                    // ToDo: Perform in a thread!
+                    Log.d("INFO:::", "Saving image in internal storage and updating database");
+                    Log.d("INFO:::", "Filename:         " + fileName);
+                    Log.d("INFO:::", "Name in database: " + dbName);
+
+                    // Saving image
+                    FileOutputStream outputStream;
+                    // ToDo: Don't just catch an generic Exception...
+                    try {
+                        outputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
+                        scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+                        outputStream.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    DatabaseHandler db = new DatabaseHandler(getBaseContext());
+                    String dirPath = getFilesDir().getPath();
+                    db.addImageEntry(new ImageEntry(dirPath + "/"+ fileName, dbName));
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User cancelled the dialog
+                    // Do nothing...
+                }
+            });
+
+
+            AlertDialog imageNameDialog = builder.create();
+            imageNameDialog.show();
 
         } else if (requestCode == SELECT_AND_CROP_IMAGE  && resultCode == RESULT_OK) {
             Log.d("INFO:::", "URI to cropped file: " + data.getData());
@@ -168,13 +225,16 @@ public class AddImageActivity extends Activity {
     public void listAllImages(View view) {
         TextView textView = (TextView) findViewById(R.id.add_text_view);
         textView.setText("");
+        textView.setMovementMethod(new ScrollingMovementMethod());
+
+
 
         File path = new File(this.getFilesDir().getPath());
         File files[] = path.listFiles();
         for (File f : files) {
-            textView.append(f.toString() + "\n");
+            textView.append(String.format("%1$-20s", f.getName()) +
+                    f.length()/1000.0 + " kB" + "\n");
         }
     }
-
 
 }

@@ -49,6 +49,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="se.henkan.ordpek.MainActivity" />
         </activity>
+        <activity
+            android:name=".RemoveImageActivity"
+            android:label="@string/title_activity_remove_image"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="se.henkan.ordpek.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

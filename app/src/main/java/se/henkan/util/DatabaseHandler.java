@@ -84,7 +84,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         return imageEntry;
     }
 
-    // Getting All Image entries
+    // Get all Image entries
     public List<ImageEntry> getAllImageEntries() {
         List<ImageEntry> imageList = new ArrayList<ImageEntry>();
         // Select All Query
@@ -158,6 +158,22 @@ public class DatabaseHandler extends SQLiteOpenHelper{
             } while (cursor.moveToNext());
         }
         return IDs;
+    }
+
+    // Return a List of all the names
+    public List<String> getAllNames(){
+        List<String> names = new ArrayList<String>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_IMAGES;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                names.add(cursor.getString(2));
+            } while (cursor.moveToNext());
+        }
+        return names;
     }
 
 }
