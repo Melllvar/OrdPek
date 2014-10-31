@@ -72,8 +72,8 @@ public class MainActivity extends Activity {
             case R.id.action_settings:
                 //openSettings();
                 return true;
-            case R.id.action_remove:
-                openRemove();
+            case R.id.action_edit:
+                openEdit();
                 return true;
             case R.id.action_add:
                 openAdd();
@@ -150,8 +150,8 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
-    private void openRemove() {
-        Intent intent = new Intent(this, RemoveImageActivity.class);
+    private void openEdit() {
+        Intent intent = new Intent(this, EditImageActivity.class);
         startActivity(intent);
     }
 

@@ -72,7 +72,7 @@ public class AddImageActivity extends Activity {
                     // User clicked OK button
                     // Save image and update database...
                     Editable value = input.getText();
-                    // ToDo: Check input for correct formatting! (åäö and correct filename...)
+                    // ToDo: Check input for correct formatting! (åäö, spaces, correct filename etc...)
                     String dbName = value.toString().trim().toLowerCase();
                     String timeStamp = String.valueOf(System.currentTimeMillis());
                     timeStamp = timeStamp.substring(timeStamp.length()-5);

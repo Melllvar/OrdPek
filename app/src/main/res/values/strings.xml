@@ -6,16 +6,16 @@
     <string name="menu_choose_image">Välj rätt bild</string>
     <string name="menu_choose_word">Välj rätt ord</string>
     <string name="menu_initial_letter">Begynnelsebokstav</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_add">Add image</string>
-    <string name="action_remove">Remove image</string>
+    <string name="action_settings">Inställningar</string>
+    <string name="action_add">Lägg till bild</string>
+    <string name="action_edit">Hantera bilder</string>
     <string name="title_activity_choose_image">ChooseImage</string>
     <string name="title_activity_choose_word">ChooseWord</string>
     <string name="title_activity_initial_letter">InitialLetter</string>
     <string name="progress_title">Laddar</string>
     <string name="progress_text">Vänta... Kopierar bilder och uppdaterar databasen!</string>
-    <string name="title_activity_add_image">AddImageActivity</string>
-    <string name="add_image_title">Add image:</string>
-    <string name="title_activity_remove_image">RemoveImageActivity</string>
+    <string name="title_activity_add_image">AddImage</string>
+    <string name="add_image_title">Lägg till bild:</string>
+    <string name="title_activity_edit_image">EditImage</string>
 
 </resources>
