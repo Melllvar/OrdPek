@@ -44,9 +44,11 @@ public class ChooseImageActivity extends Activity {
 
         if (view.getId() == correctAnswer.getId()){
             answerView.setBackgroundColor(Color.GREEN);
+            // ToDo: Play sound... [CORRECT]
 
         } else {
             answerView.setBackgroundColor(Color.RED);
+            // ToDo: Play sound... [WRONG]
         }
 
         // Wait a while then set up the game again...
@@ -63,7 +65,8 @@ public class ChooseImageActivity extends Activity {
         }, 1000);
     }
 
-    // Toggle between CAPITAL/lower letters in the question when pressed...
+    // Toggle between UPPER-/lower case  letters in the question when pressed...
+    // ToDO: Move this function to utils? (Used in more places...)
     public void toggleCapsImage(View view) {
         TextView textView = (TextView) view;
         String questionString = textView.getText().toString();
