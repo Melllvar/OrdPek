@@ -32,6 +32,8 @@ public class InitialLetterActivity extends Activity {
     }
 
     // Set random images in place...
+    // ToDo: Add errorhandling (when not enough images...)
+    // ToDo: Move this functionality to util?
     private void randomizeBoard(){
         // Get the buttons in a list
         ArrayList<ImageButton> buttons = new ArrayList<ImageButton>();

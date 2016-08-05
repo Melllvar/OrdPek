@@ -3,6 +3,8 @@ package se.henkan.ordpek;
 /**
  * Created by Henkan on 2014-10-03.
  */
+
+// ToDo: Move to utils?
 public class ImageEntry {
 
     // Private variables
@@ -61,7 +63,7 @@ public class ImageEntry {
     public String get_firstLetter() {
         return _firstLetter;
     }
-    // set FIRST_LETTER  <========================REMOVE???
+    // set FIRST_LETTER  ToDo:<========================REMOVE???
     public void set_firstLetter(String firstLetter) {
         this._firstLetter = firstLetter;
     }

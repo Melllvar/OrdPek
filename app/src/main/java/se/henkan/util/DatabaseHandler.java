@@ -90,7 +90,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_IMAGES;
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase(); // Todo: getReadable???
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         // looping through all rows and adding to list
@@ -132,7 +132,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
         // updating row
         return db.update(TABLE_IMAGES, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(imageEntry.get_id()) });
+                new String[]{String.valueOf(imageEntry.get_id())});
     }
 
     // Delete single ImageEntry
@@ -174,6 +174,16 @@ public class DatabaseHandler extends SQLiteOpenHelper{
             } while (cursor.moveToNext());
         }
         return names;
+    }
+
+    //ToDo: is this ok? Or REMOVE??! Never called
+    public Cursor getDbCursor(){
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_IMAGES;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        return cursor;
     }
 
 }
