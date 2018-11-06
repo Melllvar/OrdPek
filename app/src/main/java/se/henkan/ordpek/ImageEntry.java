@@ -63,7 +63,7 @@ public class ImageEntry {
     public String get_firstLetter() {
         return _firstLetter;
     }
-    // set FIRST_LETTER  ToDo:<========================REMOVE???
+    // set FIRST_LETTER  ToDo:<========================REMOVE??? or take first letter from _name?
     public void set_firstLetter(String firstLetter) {
         this._firstLetter = firstLetter;
     }

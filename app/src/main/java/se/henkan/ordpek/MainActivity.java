@@ -154,8 +154,5 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, EditImageActivity.class);
         startActivity(intent);
     }
-
-
-
 }
 

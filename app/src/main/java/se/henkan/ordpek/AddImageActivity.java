@@ -227,8 +227,6 @@ public class AddImageActivity extends Activity {
         textView.setText("");
         textView.setMovementMethod(new ScrollingMovementMethod());
 
-
-
         File path = new File(this.getFilesDir().getPath());
         File files[] = path.listFiles();
         for (File f : files) {

@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "20.0.0"
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "se.henkan.ordpek"
         minSdkVersion 14
-        targetSdkVersion 22
+        targetSdkVersion 28
+        //multiDexEnabled true
         versionCode 1
         versionName "1.0"
     }

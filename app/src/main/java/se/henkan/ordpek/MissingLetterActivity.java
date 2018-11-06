@@ -22,6 +22,8 @@ import se.henkan.util.ScalingUtilities;
  */
 
 
+//ToDo: Add check to verify that there are enough images in the DB (and enough unique names/letters)
+
 public class MissingLetterActivity extends Activity {
     private static boolean isButtonsCapitalized = false;
     private Button correctAnswer;

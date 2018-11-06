@@ -38,14 +38,17 @@ public class EditImageActivity extends ListActivity
     // Handler to the database
     private DatabaseHandler db = new DatabaseHandler(this);
 
-    // The image names to retrive
+    // The image names to retrieve..
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_image);
 
-        mEditList = (ListView) findViewById(R.id.edit_list);
+        //setContentView(R.layout.activity_edit_image);
+
+
+        mEditList = getListView();
+        //mEditList = (ListView) findViewById(R.id.edit_list);
 
         // Get all the imageEntries
         // ToDo: get cursor instead...
